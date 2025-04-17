@@ -16,6 +16,8 @@ const ReportPage: React.FC = () => {
       setLoading(true);
       setError(null);
 
+      console.info(`${process.env.REACT_APP_API_URL}/reports`)
+
       const response = await fetch(`${process.env.REACT_APP_API_URL}/reports`, {
         headers: {
           'Authorization': `Bearer ${keycloak.token}`
@@ -35,6 +37,9 @@ const ReportPage: React.FC = () => {
   }
 
   if (!keycloak.authenticated) {
+    keycloak.init({
+        pkceMethod: "S256"
+    })
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <button
